@@ -298,6 +298,8 @@ def fetch_order_item_list_by_year_page(handle, year, page):
                 for i in range(total_page):
                     store_yodobashi.handle.set_page_checked(handle, year, i + 1)
 
+        time.sleep(3)
+
     return page == total_page
 
 
