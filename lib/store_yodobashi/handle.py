@@ -71,7 +71,12 @@ def get_selenium_driver(handle):
     if "selenium" in handle:
         return (handle["selenium"]["driver"], handle["selenium"]["wait"])
     else:
-        driver = local_lib.selenium_util.create_driver("Yodhist", get_selenium_data_dir_path(handle))
+        driver = local_lib.selenium_util.create_driver(
+            "Yodhist",
+            get_selenium_data_dir_path(handle),
+            # NOTE: Headless Chrome だと，ヨドバシ.com が使用している Akamai にブロックされてしまう
+            is_headless=False,
+        )
         wait = WebDriverWait(driver, 5)
 
         local_lib.selenium_util.clear_cache(driver)

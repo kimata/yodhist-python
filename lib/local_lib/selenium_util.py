@@ -22,7 +22,7 @@ WAIT_RETRY_COUNT = 1
 AGENT_NAME = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"
 
 
-def create_driver_impl(profile_name, data_path, agent_name):
+def create_driver_impl(profile_name, data_path, agent_name, is_headless):
     chrome_data_path = data_path / "chrome"
     log_path = data_path / "log"
 
@@ -31,7 +31,9 @@ def create_driver_impl(profile_name, data_path, agent_name):
 
     options = Options()
 
-    # options.add_argument("--headless")
+    if is_headless:
+        options.add_argument("--headless")
+
     options.add_argument("--disable-blink-features=AutomationControlled")
     options.add_argument("--no-sandbox")  # for Docker
     options.add_argument("--disable-dev-shm-usage")  # for Docker
@@ -81,12 +83,12 @@ def create_driver_impl(profile_name, data_path, agent_name):
     return driver
 
 
-def create_driver(profile_name, data_path, agent_name=AGENT_NAME):
+def create_driver(profile_name, data_path, agent_name=AGENT_NAME, is_headless=True):
     # NOTE: 1回だけ自動リトライ
     try:
-        return create_driver_impl(profile_name, data_path, agent_name)
+        return create_driver_impl(profile_name, data_path, agent_name, is_headless)
     except:
-        return create_driver_impl(profile_name, data_path, agent_name)
+        return create_driver_impl(profile_name, data_path, agent_name, is_headless)
 
 
 def xpath_exists(driver, xpath):
