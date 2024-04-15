@@ -487,6 +487,7 @@ def warm_up(handle):
 
     # NOTE: ダメもとで，Akamai の EdgeSuite を翻弄してみる．
 
+    logging.info("Dummy access to google.com")
     visit_url(handle, "https://www.google.com/")
 
     driver.find_element(By.XPATH, '//textarea[@title="検索"]').send_keys("ヨドバシ.com")
@@ -502,6 +503,7 @@ def warm_up(handle):
 
     time.sleep(1)
 
+    logging.info("Dummy access to yahoo.co.jp")
     visit_url(handle, "https://www.yahoo.co.jp/")
 
     driver.find_element(By.XPATH, '//input[@name="p"]').send_keys("ヨドバシ.com")
