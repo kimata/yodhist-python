@@ -91,6 +91,14 @@ def reload_selenium_driver(handle):
     get_selenium_driver(handle)
 
 
+def reload_progress_manager(handle):
+    handle["progress_manager"].stop()
+    handle["progress_manager"] = enlighten.get_manager()
+
+    handle.pop("status")
+    handle["progress_bar"] = {}
+
+
 def get_selenium_driver(handle):
     global driver_index
 
