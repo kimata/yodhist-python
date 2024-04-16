@@ -80,6 +80,8 @@ def create_driver_impl(profile_name, data_path, agent_name, is_headless):
         },
     )
 
+    driver.set_page_load_timeout(30)
+
     return driver
 
 
