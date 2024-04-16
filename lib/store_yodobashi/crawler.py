@@ -37,6 +37,7 @@ STATUS_ORDER_ITEM_ALL = "[collect] All orders"
 STATUS_ORDER_ITEM_BY_YEAR = "[collect] Year {year} orders"
 
 LOGIN_RETRY_COUNT = 2
+FETCH_RETRY_COUNT = 5
 
 
 def wait_for_loading(handle, xpath="//body", sec=1):
@@ -471,13 +472,26 @@ def fetch_order_item_list(handle):
 
     store_yodobashi.handle.set_status(handle, "注文履歴の収集を開始します...")
 
-    try:
-        fetch_order_item_list_all_year(handle)
-    except:
-        local_lib.selenium_util.dump_page(
-            driver, int(random.random() * 100), store_yodobashi.handle.get_debug_dir_path(handle)
-        )
-        raise
+    for i in range(FETCH_RETRY_COUNT):
+        if i != 0:
+            logging.warning("Retry... (count: {count})".format(count=i))
+
+        try:
+            return fetch_order_item_list_all_year(handle)
+        except Exception as e:
+            logging.warning(str(e))
+
+            local_lib.selenium_util.dump_page(
+                driver, int(random.random() * 100), store_yodobashi.handle.get_debug_dir_path(handle)
+            )
+
+            if i == (FETCH_RETRY_COUNT - 1):
+                raise
+            else:
+                pass
+
+        store_yodobashi.handle.reload_selenium_driver(handle)
+        warm_up(handle)
 
     store_yodobashi.handle.set_status(handle, "注文履歴の収集が完了しました．")
 

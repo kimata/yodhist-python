@@ -4,12 +4,16 @@ import pathlib
 import enlighten
 import datetime
 import functools
+import logging
+import traceback
 
 from selenium.webdriver.support.wait import WebDriverWait
 import openpyxl.styles
 
 import local_lib.serializer
 import local_lib.selenium_util
+
+driver_index = 0
 
 
 def create(config):
@@ -67,12 +71,34 @@ def get_debug_dir_path(handle):
     return pathlib.Path(handle["config"]["base_dir"], handle["config"]["data"]["debug"])
 
 
+def reload_selenium_driver(handle):
+    global driver_index
+
+    if "selenium" not in handle:
+        return
+
+    driver, wait = get_selenium_driver(handle)
+    try:
+        driver.quit()
+    except:
+        logging.error(traceback.format_exc())
+        pass
+
+    handle.pop("selenium")
+
+    driver_index += 1
+
+    get_selenium_driver(handle)
+
+
 def get_selenium_driver(handle):
+    global driver_index
+
     if "selenium" in handle:
         return (handle["selenium"]["driver"], handle["selenium"]["wait"])
     else:
         driver = local_lib.selenium_util.create_driver(
-            "Yodhist",
+            "Yodhist_{index}".format(index=driver_index),
             get_selenium_data_dir_path(handle),
             # NOTE: Headless Chrome だと，ヨドバシ.com が使用している Akamai にブロックされてしまう
             is_headless=False,
