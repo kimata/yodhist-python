@@ -467,9 +467,9 @@ def fetch_order_item_list(handle):
     store_yodobashi.handle.set_status(handle, "巡回ロボットの準備をします...")
     driver, wait = store_yodobashi.handle.get_selenium_driver(handle)
 
-    store_yodobashi.handle.set_status(handle, "注文履歴の収集を開始します...")
-
     for i in range(FETCH_RETRY_COUNT):
+        store_yodobashi.handle.set_status(handle, "注文履歴の収集を開始します...")
+
         if i != 0:
             logging.warning("Retry... (count: {count})".format(count=i))
 
