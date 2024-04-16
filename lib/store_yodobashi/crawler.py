@@ -467,9 +467,6 @@ def fetch_order_item_list(handle):
     store_yodobashi.handle.set_status(handle, "巡回ロボットの準備をします...")
     driver, wait = store_yodobashi.handle.get_selenium_driver(handle)
 
-    store_yodobashi.handle.set_status(handle, "ウォームアップを行います...")
-    warm_up(handle)
-
     store_yodobashi.handle.set_status(handle, "注文履歴の収集を開始します...")
 
     for i in range(FETCH_RETRY_COUNT):
@@ -492,43 +489,9 @@ def fetch_order_item_list(handle):
                 pass
 
         store_yodobashi.handle.reload_selenium_driver(handle)
-        warm_up(handle)
+        store_yodobashi.handle.reload_progress_manager(handle)
 
     store_yodobashi.handle.set_status(handle, "注文履歴の収集が完了しました．")
-
-
-def warm_up(handle):
-    driver, wait = store_yodobashi.handle.get_selenium_driver(handle)
-
-    # NOTE: ダメもとで，Akamai の EdgeSuite を翻弄してみる．
-
-    logging.info("Dummy access to google.com")
-    visit_url(handle, "https://www.google.com/")
-
-    driver.find_element(By.XPATH, '//textarea[@title="検索"]').send_keys("ヨドバシ.com")
-    driver.find_element(By.XPATH, '//textarea[@title="検索"]').send_keys(Keys.ENTER)
-
-    time.sleep(1)
-
-    driver.find_element(By.XPATH, '//a[contains(@href, "yodobashi.com")]').click()
-
-    time.sleep(1)
-
-    driver.back()
-
-    time.sleep(1)
-
-    logging.info("Dummy access to yahoo.co.jp")
-    visit_url(handle, "https://www.yahoo.co.jp/")
-
-    driver.find_element(By.XPATH, '//input[@name="p"]').send_keys("ヨドバシ.com")
-    driver.find_element(By.XPATH, '//input[@name="p"]').send_keys(Keys.ENTER)
-
-    time.sleep(1)
-
-    driver.find_element(By.XPATH, '//a[contains(@href, "yodobashi.com")]').click()
-
-    time.sleep(1)
 
 
 def execute_login(handle):
