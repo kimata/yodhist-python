@@ -481,9 +481,10 @@ def fetch_order_item_list(handle):
         except Exception as e:
             logging.warning(str(e))
 
-            local_lib.selenium_util.dump_page(
-                driver, int(random.random() * 100), store_yodobashi.handle.get_debug_dir_path(handle)
-            )
+            # NOTE: 下記で例外が発生することがあるので，ここではダンプをしない
+            # local_lib.selenium_util.dump_page(
+            #     driver, int(random.random() * 100), store_yodobashi.handle.get_debug_dir_path(handle)
+            # )
 
             if i == (FETCH_RETRY_COUNT - 1):
                 raise
