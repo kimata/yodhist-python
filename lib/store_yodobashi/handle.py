@@ -201,15 +201,21 @@ def get_progress_bar(handle, desc):
     return handle["progress_bar"][desc]
 
 
-def set_status(handle, status):
+def set_status(handle, status, is_error=False):
+    if is_error:
+        color = "bold_bright_white_on_red"
+    else:
+        color = "bold_bright_white_on_lightslategray"
+
     if "status" not in handle:
         handle["status"] = handle["progress_manager"].status_bar(
             status_format="Yodhist{fill}{status}{fill}{elapsed}",
-            color="bold_bright_white_on_lightslategray",
+            color=color,
             justify=enlighten.Justify.CENTER,
             status=status,
         )
     else:
+        handle["status"].color = color
         handle["status"].update(status=status, force=True)
 
 
@@ -219,6 +225,7 @@ def finish(handle):
         handle.pop("selenium")
 
     handle["progress_manager"].stop()
+    handle.pop("progress_manager")
 
 
 def store_order_info(handle):

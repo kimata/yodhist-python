@@ -607,6 +607,8 @@ if __name__ == "__main__":
         else:
             fetch_order_item_list(handle)
     except:
+        store_yodobashi.handle.set_status(handle, "エラーが発生しました", is_error=True)
+
         driver, wait = store_yodobashi.handle.get_selenium_driver(handle)
         logging.error(traceback.format_exc())
 
