@@ -9,4 +9,4 @@ export DISPLAY=:99
 
 "$@"
 
-kill -9 $XFVB
+kill -9 $XFVB_PID
