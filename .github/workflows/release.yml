@@ -6,8 +6,8 @@ on:
       - "v[0-9]+.[0-9]+.[0-9]+"
 
 env:
-  PROJECT_NAME: yahist
-  SCRIPT_NAME: app/yahist.py
+  PROJECT_NAME: yodhist
+  SCRIPT_NAME: app/yodhist.py
 
 jobs:
   prepare:

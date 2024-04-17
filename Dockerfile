@@ -17,6 +17,7 @@ RUN curl -O  https://dl.google.com/linux/direct/google-chrome-stable_current_amd
 RUN apt-get update && apt-get install --assume-yes \
     language-pack-ja fonts-ipaexfont-gothic \
     python3 python3-pip \
+    xvfb \
     ./google-chrome-stable_current_amd64.deb \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
@@ -45,4 +46,4 @@ USER ubuntu
 
 ENV TERM=xterm-256color
 
-CMD ["./app/yodhist.py"]
+CMD ["./script/xvfb-run.sh", "./app/yodhist.py"]
