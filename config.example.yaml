@@ -1,7 +1,8 @@
 # 購入履歴情報を取得するための，ヨドバシのログイン情報
 login:
-  user: ヨドバシ.com のユーザ名
-  mail: ヨドバシ.com のパスワード
+  yodobashi:
+    user: ヨドバシ.com のユーザ名
+    mail: ヨドバシ.com のパスワード
 
 # データ収集で使用する一時ファイルの置き場所
 data:
@@ -11,12 +12,13 @@ data:
   # デバッグ用のファイルを生成するフォルダ
   debug: data/debug
 
-  # 購入履歴関係のデータ
-  cache:
-    # 収集した購入履歴情報 (どこまで取集したかの管理データ含む)
-    order: data/yodhist_cache.dat
-    # サムネイル画像
-    thumb: data/thumb
+  yodobashi:
+    # 購入履歴関係のデータ
+    cache:
+      # 収集した購入履歴情報 (どこまで取集したかの管理データ含む)
+      order: data/yodobashi/cache.dat
+      # サムネイル画像
+      thumb: data/yodobashi/thumb
 
 # 出力ファイルの置き場所
 output:
