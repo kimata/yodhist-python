@@ -234,6 +234,7 @@ def skip_order_item_list_by_year_page(handle, year, page):
     store_yodobashi.handle.get_progress_bar(handle, gen_status_label_by_year(year)).update(incr_order)
     store_yodobashi.handle.get_progress_bar(handle, STATUS_ORDER_ITEM_ALL).update(incr_order)
 
+    # NOTE: これ，状況によっては最終ページで成り立たないので，良くない
     return incr_order != store_yodobashi.const.ORDER_COUNT_PER_PAGE
 
 
@@ -301,7 +302,7 @@ def fetch_order_item_list_by_year_page(handle, year, page):
 
         time.sleep(3)
 
-    return page == total_page
+    return page >= total_page
 
 
 def fetch_order_item_list_by_year(handle, year):

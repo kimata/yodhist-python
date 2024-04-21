@@ -217,7 +217,7 @@ def set_status(handle, status, is_error=False):
 
     if "status" not in handle:
         handle["status"] = handle["progress_manager"].status_bar(
-            status_format="Yodhist{fill}{status}{fill}{elapsed}",
+            status_format="ヨドバシ{fill}{status}{fill}{elapsed}",
             color=color,
             justify=enlighten.Justify.CENTER,
             status=status,
