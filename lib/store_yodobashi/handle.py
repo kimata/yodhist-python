@@ -137,7 +137,7 @@ def get_item_list(handle):
 
 
 def get_last_item(handle, year):
-    return next(filter(lambda item: item["date"].year == year, get_item_list(handle)), None)
+    return next(filter(lambda item: item["date"].year == year, reversed(get_item_list(handle))), None)
 
 
 def set_year_list(handle, year_list):
