@@ -7,8 +7,8 @@ Usage:
   yodhist.py [-c CONFIG] [-e] [-N]
 
 Options:
-  -c CONFIG    : CONFIG を設定ファイルとして読み込んで実行します．[default: config.yaml]
-  -e           : データ収集は行わず，Excel ファイルの出力のみ行います．
+  -c CONFIG     : CONFIG を設定ファイルとして読み込んで実行します．[default: config.yaml]
+  -e            : データ収集は行わず，Excel ファイルの出力のみ行います．
   -N            : サムネイル画像を含めないようにします．
 """
 
