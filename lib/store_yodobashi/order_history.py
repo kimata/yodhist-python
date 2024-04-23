@@ -4,11 +4,12 @@
 ヨドバシ.com の購入履歴情報をエクセルファイルに書き出します．
 
 Usage:
-  order_history.py [-c CONFIG] [-o EXCEL]
+  order_history.py [-c CONFIG] [-o EXCEL] [-N]
 
 Options:
   -c CONFIG     : CONFIG を設定ファイルとして読み込んで実行します．[default: config.yaml]
-  -o EXCEL      : CONFIG を設定ファイルとして読み込んで実行します．[default: yodhist.xlsx]
+  -o EXCEL      : 生成する Excel ファイルを指定します．[default: amazhist.xlsx]
+  -N            : サムネイル画像を含めないようにします．
 """
 
 import logging
@@ -94,7 +95,7 @@ SHEET_DEF = {
 }
 
 
-def generate_sheet(handle, book):
+def generate_sheet(handle, book, is_need_thumb=True):
     item_list = store_yodobashi.handle.get_item_list(handle)
 
     store_yodobashi.handle.set_progress_bar(handle, STATUS_INSERT_ITEM, len(item_list))
@@ -111,7 +112,7 @@ def generate_sheet(handle, book):
     )
 
 
-def generate_table_excel(handle, excel_file):
+def generate_table_excel(handle, excel_file, is_need_thumb=True):
     store_yodobashi.handle.set_status(handle, "エクセルファイルの作成を開始します...")
     store_yodobashi.handle.set_progress_bar(handle, STATUS_ALL, 2 + 3 * 1)
 
@@ -122,7 +123,7 @@ def generate_table_excel(handle, excel_file):
 
     store_yodobashi.handle.get_progress_bar(handle, STATUS_ALL).update()
 
-    generate_sheet(handle, book)
+    generate_sheet(handle, book, is_need_thumb)
 
     book.remove(book.worksheets[0])
 
@@ -153,9 +154,10 @@ if __name__ == "__main__":
 
     config = local_lib.config.load(args["-c"])
     excel_file = args["-o"]
+    is_need_thumb = not args["-N"]
 
     handle = store_yodobashi.handle.create(config)
 
-    generate_table_excel(handle, excel_file)
+    generate_table_excel(handle, excel_file, is_need_thumb)
 
     store_yodobashi.handle.finish(handle)
