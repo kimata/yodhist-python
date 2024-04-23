@@ -105,6 +105,7 @@ def generate_sheet(handle, book, is_need_thumb=True):
         book,
         item_list,
         SHEET_DEF,
+        is_need_thumb,
         lambda item: store_yodobashi.handle.get_thumb_path(handle, item),
         store_yodobashi.handle.set_status,
         lambda: store_yodobashi.handle.get_progress_bar(handle, STATUS_ALL).update(),
